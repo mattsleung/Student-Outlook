@@ -1,4 +1,33 @@
 # Student Outlook
 
-A student publication by-students and for-students featuring study advice, encouragement,
-student perspectives, short stories, and entertainment.
+A public student publication featuring study advice, social tips, student stories, and
+entertainment for middle and high school students.
+
+## Local development
+
+Install the project and start the local website:
+
+```bash
+npm install
+npm run dev
+```
+
+Then open `http://localhost:3000`.
+
+The local dashboard file is available at `http://localhost:3000/admin/index.html`.
+Real writer login will not work until the OAuth setup in the editorial guide is complete.
+
+## Project checks
+
+```bash
+npm run lint
+npm run typecheck
+npm run build
+```
+
+## Article publishing
+
+The planned Decap CMS dashboard uses Open Authoring. Writers create drafts, while the
+repository owner performs the final review and merge. See
+[`docs/editorial-workflow.md`](docs/editorial-workflow.md) for the writer, owner, Discord,
+and authentication steps.

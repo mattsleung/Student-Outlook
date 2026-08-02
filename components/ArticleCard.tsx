@@ -6,12 +6,15 @@ import { ArticleArtwork } from "./ArticleArtwork";
 
 export function ArticleCard({ article }: { article: Article }) {
   const categorySlug = getCategorySlug(article.category);
+  const hasArtwork = article.artwork === "default";
 
   return (
-    <article className="article-card">
-      <Link className="card-art-link" href={`/articles/${article.slug}`} tabIndex={-1}>
-        <ArticleArtwork accent={article.accent} symbol={article.symbol} compact />
-      </Link>
+    <article className={`article-card${hasArtwork ? "" : " article-card-no-artwork"}`}>
+      {hasArtwork && (
+        <Link className="card-art-link" href={`/articles/${article.slug}`} tabIndex={-1}>
+          <ArticleArtwork accent={article.accent} symbol={article.symbol} compact />
+        </Link>
+      )}
       <div className="article-card-content">
         <div className="article-meta-row">
           <Link className="category-tag" href={`/categories/${categorySlug}`}>

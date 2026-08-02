@@ -34,6 +34,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   if (!article) notFound();
 
   const categorySlug = getCategorySlug(article.category);
+  const hasArtwork = article.artwork === "default";
   const relatedArticles = getAllArticles()
     .filter((item) => item.slug !== article.slug)
     .slice(0, 2);
@@ -41,7 +42,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   return (
     <main id="main-content">
       <article>
-        <header className="article-hero section-shell">
+        <header
+          className={`article-hero section-shell${hasArtwork ? "" : " article-hero-no-artwork"}`}
+        >
           <div className="article-hero-copy">
             <Link className="category-tag" href={`/categories/${categorySlug}`}>
               {article.category}
@@ -60,7 +63,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </div>
             </div>
           </div>
-          <ArticleArtwork accent={article.accent} symbol={article.symbol} />
+          {hasArtwork && <ArticleArtwork accent={article.accent} symbol={article.symbol} />}
         </header>
 
         <div className="article-layout section-shell">

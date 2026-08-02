@@ -8,6 +8,7 @@ export default function HomePage() {
   const articles = getAllArticles();
   const featuredArticle = articles.find((article) => article.featured) ?? articles[0];
   const featuredCategorySlug = getCategorySlug(featuredArticle.category);
+  const featuredHasArtwork = featuredArticle.artwork === "default";
 
   return (
     <main id="main-content">
@@ -70,8 +71,12 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <article className="featured-article">
-          <ArticleArtwork accent={featuredArticle.accent} symbol={featuredArticle.symbol} />
+        <article
+          className={`featured-article${featuredHasArtwork ? "" : " featured-article-no-artwork"}`}
+        >
+          {featuredHasArtwork && (
+            <ArticleArtwork accent={featuredArticle.accent} symbol={featuredArticle.symbol} />
+          )}
           <div className="featured-content">
             <Link className="category-tag" href={`/categories/${featuredCategorySlug}`}>
               {featuredArticle.category}

@@ -427,6 +427,14 @@ h2 {
   grid-template-columns: 1.1fr 0.9fr;
 }
 
+.featured-article-no-artwork {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.featured-article-no-artwork .featured-content {
+  max-width: 840px;
+}
+
 .article-artwork {
   position: relative;
   min-height: 430px;
@@ -639,6 +647,10 @@ h2 {
 
 .article-card-content {
   padding: 22px;
+}
+
+.article-card-no-artwork .article-card-content {
+  padding-top: 32px;
 }
 
 .article-meta-row,
@@ -857,6 +869,10 @@ h2 {
   align-items: center;
   grid-template-columns: minmax(0, 1fr) minmax(360px, 0.78fr);
   gap: clamp(42px, 8vw, 100px);
+}
+
+.article-hero-no-artwork {
+  grid-template-columns: minmax(0, 780px);
 }
 
 .article-hero h1 {
