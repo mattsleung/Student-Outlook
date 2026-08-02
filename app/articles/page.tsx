@@ -23,7 +23,9 @@ export default function ArticlesPage() {
       <section className="section-shell archive-section" aria-labelledby="all-articles-title">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">All six stories</p>
+            <p className="eyebrow">
+              {articles.length} {articles.length === 1 ? "story" : "stories"}
+            </p>
             <h2 id="all-articles-title">The latest from Student Outlook</h2>
           </div>
         </div>

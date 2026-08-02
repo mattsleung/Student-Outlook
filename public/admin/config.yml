@@ -1,0 +1,91 @@
+backend:
+  name: github
+  repo: mattsleung/Student-Outlook
+  branch: main
+  open_authoring: true
+  squash_merges: true
+  # Replace this after creating the Netlify OAuth helper project described in
+  # docs/editorial-workflow.md. Do not place an OAuth secret in this file.
+  site_domain: REPLACE_WITH_NETLIFY_SITE_HOSTNAME
+
+site_url: https://mattsleung.github.io/Student-Outlook/
+display_url: https://mattsleung.github.io/Student-Outlook/
+publish_mode: editorial_workflow
+show_preview_links: false
+
+# Image uploads are not part of the first editorial workflow. This folder is
+# configured because Decap requires a media location, but article validation
+# rejects Markdown image embeds and pull-request checks reject files added here.
+media_folder: public/article-media
+public_folder: /Student-Outlook/article-media
+
+collections:
+  - name: articles
+    label: Articles
+    label_singular: Article
+    description: Write an article, save it as a draft, and send it to the owner for review.
+    folder: content/articles
+    create: true
+    delete: false
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    slug: "{{slug}}"
+    summary: "{{title}} — {{author}}"
+    sortable_fields: [title, dateIso, category]
+    editor:
+      preview: false
+    fields:
+      - label: Title
+        name: title
+        widget: string
+        pattern: ['^.{5,100}$', "Use a title between 5 and 100 characters."]
+        hint: Use a clear title that tells readers what the article is about.
+      - label: Author display name
+        name: author
+        widget: string
+        hint: Use a first name and last initial, such as Jordan P. Never enter private contact information.
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - Study Tips
+          - Social Tips
+          - Student Stories
+          - Entertainment
+      - label: Short summary
+        name: summary
+        widget: text
+        pattern: ['^[\s\S]{20,220}$', "Use a summary between 20 and 220 characters."]
+        hint: Write one or two short sentences for the article card.
+      - label: Publication date
+        name: dateIso
+        widget: datetime
+        date_format: MMMM D, YYYY
+        time_format: false
+        format: YYYY-MM-DD
+        hint: The owner will confirm this date before publication.
+      - label: Article artwork
+        name: artwork
+        widget: select
+        default: default
+        options:
+          - label: Student Outlook default artwork
+            value: default
+          - label: No artwork
+            value: none
+        hint: Default artwork uses an automatically selected Student Outlook color. Image uploads are not enabled.
+      - label: Suggest as the featured article
+        name: featured
+        widget: boolean
+        default: false
+        required: false
+        hint: The owner makes the final decision before publishing.
+      - label: Article
+        name: body
+        widget: richtext
+        buttons: [bold, italic, heading-two, bulleted-list]
+        editor_components: []
+        modes: [rich_text]
+        sanitize_preview: true
+        hint: Drafts may be publicly visible on GitHub. Never include private information, school names, schedules, addresses, or exact locations.
