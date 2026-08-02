@@ -160,18 +160,6 @@ h2 {
   color: var(--ink);
 }
 
-.desktop-navigation a:last-child {
-  margin-left: 5px;
-  border: 2px solid var(--ink);
-  background: var(--ink);
-  color: var(--white);
-}
-
-.desktop-navigation a:last-child:hover {
-  background: transparent;
-  color: var(--ink);
-}
-
 .mobile-navigation {
   display: none;
 }
