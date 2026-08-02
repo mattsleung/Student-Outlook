@@ -1,5 +1,11 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {};
+const isGitHubPagesBuild = process.env.GITHUB_ACTIONS === "true";
+
+const nextConfig: NextConfig = {
+  output: "export",
+  trailingSlash: true,
+  basePath: isGitHubPagesBuild ? "/Student-Outlook" : "",
+};
 
 export default nextConfig;
