@@ -1,0 +1,38 @@
+import type { Metadata } from "next";
+
+import { ArticleCard } from "@/components/ArticleCard";
+import { getAllArticles } from "@/lib/articles";
+
+export const metadata: Metadata = {
+  title: "Articles",
+  description: "Browse every Student Outlook article.",
+};
+
+export default function ArticlesPage() {
+  const articles = getAllArticles();
+
+  return (
+    <main id="main-content">
+      <header className="page-hero page-hero-sky section-shell">
+        <p className="eyebrow">The article shelf</p>
+        <h1>Ideas for school, life, and everything between.</h1>
+        <p>
+          Browse practical tips, creative prompts, and reminders written for students.
+        </p>
+      </header>
+      <section className="section-shell archive-section" aria-labelledby="all-articles-title">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">All six stories</p>
+            <h2 id="all-articles-title">The latest from Student Outlook</h2>
+          </div>
+        </div>
+        <div className="article-grid">
+          {articles.map((article) => (
+            <ArticleCard article={article} key={article.slug} />
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}
