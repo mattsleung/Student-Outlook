@@ -60,7 +60,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <div>
                 <strong>{article.author}</strong>
                 <span>
-                  <time dateTime={article.dateIso}>{article.date}</time> · {article.readTime}
+                  <time dateTime={article.dateIso}>{article.date}</time>
                 </span>
               </div>
             </div>

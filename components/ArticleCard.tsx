@@ -26,7 +26,6 @@ export function ArticleCard({ article }: { article: Article }) {
           <Link className="category-tag" href={`/categories/${categorySlug}`}>
             {article.category}
           </Link>
-          <span>{article.readTime}</span>
         </div>
         <h3>
           <Link href={`/articles/${article.slug}`}>{article.title}</Link>

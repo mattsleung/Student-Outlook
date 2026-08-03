@@ -1,11 +1,12 @@
 name: Publish approved Student Outlook articles
 
 on:
-  pull_request_target:
+  push:
     branches: [main]
-    types: [closed]
     paths:
       - content/submissions/**
+      - .github/workflows/publish-approved-articles.yml
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -16,9 +17,7 @@ concurrency:
 
 jobs:
   publish:
-    if: >-
-      github.event.pull_request.merged == true &&
-      github.event.pull_request.merged_by.login == 'mattsleung'
+    if: github.actor == 'mattsleung'
     runs-on: ubuntu-latest
     steps:
       - name: Check out the approved main branch

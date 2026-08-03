@@ -89,8 +89,6 @@ export default function HomePage() {
             <p>{featuredArticle.summary}</p>
             <div className="featured-byline">
               <span>By {featuredArticle.author}</span>
-              <span aria-hidden="true">•</span>
-              <span>{featuredArticle.readTime}</span>
             </div>
             <Link className="button button-dark" href={`/articles/${featuredArticle.slug}`}>
               Read the story <span aria-hidden="true">→</span>

@@ -35,10 +35,12 @@ collections:
         name: title
         widget: string
         pattern: ['^.{5,100}$', "Use a title between 5 and 100 characters."]
-      - label: Author display name
+      - label: Author display name (optional)
         name: author
         widget: string
-        hint: Use a first name and last initial. Never enter private contact information.
+        required: false
+        pattern: ["^$|^[A-Za-z][A-Za-z'’ -]{0,29} [A-Za-z]\\.?$", "Use a first name and last initial, such as Jordan P., or leave this blank."]
+        hint: Use a first name and last initial. The final period is optional. Leave this blank to publish as Anonymous. Never enter private contact information.
       - label: Title image (optional)
         name: titleImage
         widget: image
@@ -47,13 +49,13 @@ collections:
         media_library:
           config:
             multiple: false
-        hint: Upload one JPG, PNG, WebP, or AVIF title image no larger than 5 MB. Do not upload an identifiable photo of a student without documented permission.
+        hint: Upload one JPG, PNG, WebP, or AVIF title image no larger than 5 MB. Leave this blank to use automatically selected Student Outlook artwork. Do not upload an identifiable photo of a student without documented permission.
       - label: Title image description
         name: titleImageAlt
         widget: string
         required: false
-        pattern: ['^.{5,160}$', "Describe the image in 5 to 160 characters."]
-        hint: Required when a title image is uploaded. Briefly describe what the image shows.
+        pattern: ['^.{0,160}$', "Keep the image description under 160 characters."]
+        hint: Briefly describe what the image shows. If left blank, the article title is used.
       - label: Category
         name: category
         widget: select
@@ -68,13 +70,6 @@ collections:
         date_format: MMMM D, YYYY
         time_format: false
         format: YYYY-MM-DD
-      - label: Article artwork
-        name: artwork
-        widget: select
-        default: default
-        options:
-          - { label: Student Outlook default artwork, value: default }
-          - { label: No artwork, value: none }
       - label: Featured article
         name: featured
         widget: boolean
@@ -83,6 +78,7 @@ collections:
       - label: Article
         name: body
         widget: richtext
+        pattern: ['^[\s\S]{20,}$', "Write at least 20 characters."]
         buttons: [bold, italic, heading-two, bulleted-list]
         editor_components: []
         modes: [rich_text]

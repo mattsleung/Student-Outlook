@@ -4,10 +4,10 @@ Student Outlook uses two roles: writers and one owner/publisher.
 
 ## Writers
 
-Writers draft and edit articles together in private Google Docs. They use
-comments and Suggesting mode for feedback. Once the writing and editing are
-finished, one writer copies the completed article into the unlisted writing
-dashboard. Writers are not added as collaborators to the official Student
+Up to three writers may draft and edit an article together in a private Google
+Doc. They use comments and Suggesting mode for feedback. Once the writing and
+editing are finished, one writer copies the completed article into the unlisted
+writing dashboard. Writers are not added as collaborators to the official Student
 Outlook repository. The dashboard is not linked from the public website, but
 its address and GitHub pull requests are not secret.
 
@@ -21,9 +21,12 @@ adds or removes writers in Netlify without changing the public repository.
 3. Finish writing and editing the article in its private Google Doc.
 4. Select **Articles**, then select **New Article**.
 5. Paste the finished article into Decap and complete every required field.
+   The author display name may be left blank to publish the article as
+   **Anonymous**.
 6. Optionally upload a suitable title image no larger than 5 MB and add its image description.
-   Otherwise, choose Student Outlook default artwork or no artwork. Never use
-   an identifiable student photo without documented permission.
+   If no image is uploaded, the website supplies automatically selected Student
+   Outlook artwork. Never use an identifiable student photo without documented
+   permission.
 7. Save the Decap entry as a draft while checking its fields and formatting.
 8. When everything is complete, choose **Ready to Review**. Writers should do
    this only once; it sends the article to the owner's final-approval queue.
