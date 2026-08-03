@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { ArticleArtwork } from "@/components/ArticleArtwork";
 import { ArticleCard } from "@/components/ArticleCard";
+import { ArticleTitleImage } from "@/components/ArticleTitleImage";
 import { categoryDetails, getAllArticles, getCategorySlug } from "@/lib/articles";
 
 export default function HomePage() {
@@ -9,6 +10,7 @@ export default function HomePage() {
   const featuredArticle = articles.find((article) => article.featured) ?? articles[0];
   const featuredCategorySlug = getCategorySlug(featuredArticle.category);
   const featuredHasArtwork = featuredArticle.artwork === "default";
+  const featuredHasVisual = Boolean(featuredArticle.titleImage) || featuredHasArtwork;
 
   return (
     <main id="main-content">
@@ -72,11 +74,13 @@ export default function HomePage() {
         </div>
 
         <article
-          className={`featured-article${featuredHasArtwork ? "" : " featured-article-no-artwork"}`}
+          className={`featured-article${featuredHasVisual ? "" : " featured-article-no-artwork"}`}
         >
-          {featuredHasArtwork && (
+          {featuredArticle.titleImage ? (
+            <ArticleTitleImage alt={featuredArticle.titleImageAlt ?? ""} src={featuredArticle.titleImage} />
+          ) : featuredHasArtwork ? (
             <ArticleArtwork accent={featuredArticle.accent} symbol={featuredArticle.symbol} />
-          )}
+          ) : null}
           <div className="featured-content">
             <Link className="category-tag" href={`/categories/${featuredCategorySlug}`}>
               {featuredArticle.category}

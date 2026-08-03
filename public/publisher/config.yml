@@ -39,6 +39,21 @@ collections:
         name: author
         widget: string
         hint: Use a first name and last initial. Never enter private contact information.
+      - label: Title image (optional)
+        name: titleImage
+        widget: image
+        required: false
+        choose_url: false
+        media_library:
+          config:
+            multiple: false
+        hint: Upload one JPG, PNG, WebP, or AVIF title image no larger than 5 MB. Do not upload an identifiable photo of a student without documented permission.
+      - label: Title image description
+        name: titleImageAlt
+        widget: string
+        required: false
+        pattern: ['^.{5,160}$', "Describe the image in 5 to 160 characters."]
+        hint: Required when a title image is uploaded. Briefly describe what the image shows.
       - label: Category
         name: category
         widget: select

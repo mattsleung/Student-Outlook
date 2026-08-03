@@ -50,6 +50,8 @@ export type Article = {
   readTime: string;
   featured: boolean;
   artwork: ArticleArtworkChoice;
+  titleImage?: string;
+  titleImageAlt?: string;
   accent: ArticleAccent;
   symbol: string;
   body: string;
@@ -135,6 +137,20 @@ function validateArticleText(title: string, summary: string, author: string, bod
   }
 }
 
+function normalizeTitleImage(value: unknown, fileName: string) {
+  if (value === undefined || value === null || String(value).trim() === "") return undefined;
+
+  const image = String(value).trim();
+  const normalized = image.replace(/^\/Student-Outlook/, "");
+  if (!/^\/article-media\/[a-zA-Z0-9][a-zA-Z0-9._-]*\.(?:avif|jpe?g|png|webp)$/i.test(normalized)) {
+    throw new Error(
+      `${fileName}: "titleImage" must be a JPG, PNG, WebP, or AVIF file uploaded to the article media folder.`,
+    );
+  }
+
+  return normalized;
+}
+
 function parseArticle(fileName: string): Article {
   const slug = fileName.replace(/\.md$/, "");
   if (!slugPattern.test(slug)) {
@@ -149,6 +165,12 @@ function parseArticle(fileName: string): Article {
   const category = requireString(data.category, "category", fileName);
   const summary = requireString(data.summary, "summary", fileName);
   const dateIso = normalizeDate(data.dateIso, fileName);
+  const titleImage = normalizeTitleImage(data.titleImage, fileName);
+  const titleImageAlt = data.titleImageAlt === undefined ? "" : String(data.titleImageAlt).trim();
+
+  if (titleImage && (titleImageAlt.length < 5 || titleImageAlt.length > 160)) {
+    throw new Error(`${fileName}: "titleImageAlt" must contain 5 to 160 characters when a title image is used.`);
+  }
 
   if (!allowedCategories.has(category)) {
     throw new Error(
@@ -185,6 +207,8 @@ function parseArticle(fileName: string): Article {
     readTime: legacyReadTime || calculateReadTime(body),
     featured: data.featured === true || data.featured === "true",
     artwork: requestedArtwork,
+    titleImage,
+    titleImageAlt: titleImage ? titleImageAlt : undefined,
     accent,
     symbol: legacySymbol || getDefaultSymbol(slug),
     body,

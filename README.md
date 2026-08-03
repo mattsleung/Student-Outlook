@@ -29,9 +29,11 @@ npm run build
 
 ## Article publishing
 
-The Decap CMS dashboard uses Open Authoring. Writers create drafts in **Articles**, while
-published work appears separately under **Published**. The repository owner performs the
-final review and merge. An automated step moves an owner-approved draft into the public
+The Decap CMS dashboard uses Open Authoring. Writers draft and edit in Google Docs, paste
+finished work into **Articles**, and select **Ready to Review**. In the owner's dashboard,
+those submissions appear under **In Review**, which Student Outlook treats as the final-
+approval queue. Published work appears separately under **Published**. The repository
+owner performs the final review and merge. An automated step moves an owner-approved draft into the public
 article folder, and a GitHub check prevents other accounts from changing published work.
 A Netlify authentication function limits dashboard access to GitHub usernames approved in
 private project settings. See

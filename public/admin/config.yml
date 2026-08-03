@@ -15,9 +15,6 @@ display_url: https://mattsleung.github.io/Student-Outlook/
 publish_mode: editorial_workflow
 show_preview_links: false
 
-# Image uploads are not part of the first editorial workflow. This folder is
-# configured because Decap requires a media location, but article validation
-# rejects Markdown image embeds and pull-request checks reject files added here.
 media_folder: public/article-media
 public_folder: /Student-Outlook/article-media
 
@@ -25,7 +22,7 @@ collections:
   - name: article_drafts
     label: Articles
     label_singular: Article
-    description: Create and revise drafts here. After the owner publishes an article, it moves to Published.
+    description: Paste finished Google Docs articles here. Save unfinished Decap entries as drafts; when everything is complete, choose Ready to Review once. The owner's In Review column is the final-approval queue.
     folder: content/submissions
     create: true
     delete: false
@@ -47,6 +44,21 @@ collections:
         name: author
         widget: string
         hint: Use a first name and last initial, such as Jordan P. Never enter private contact information.
+      - label: Title image (optional)
+        name: titleImage
+        widget: image
+        required: false
+        choose_url: false
+        media_library:
+          config:
+            multiple: false
+        hint: Upload one JPG, PNG, WebP, or AVIF title image no larger than 5 MB, or leave this blank to use the artwork choice below. Do not upload an identifiable photo of a student without documented permission.
+      - label: Title image description
+        name: titleImageAlt
+        widget: string
+        required: false
+        pattern: ['^.{5,160}$', "Describe the image in 5 to 160 characters."]
+        hint: If you upload a title image, briefly describe what it shows for readers who cannot see it.
       - label: Category
         name: category
         widget: select
@@ -76,7 +88,7 @@ collections:
             value: default
           - label: No artwork
             value: none
-        hint: Default artwork uses an automatically selected Student Outlook color. Image uploads are not enabled.
+        hint: This is used only when no title image is uploaded. Default artwork uses an automatically selected Student Outlook color.
       - label: Suggest as the featured article
         name: featured
         widget: boolean
@@ -109,6 +121,8 @@ collections:
     fields:
       - { label: Title, name: title, widget: published-readonly }
       - { label: Author display name, name: author, widget: published-readonly }
+      - { label: Title image, name: titleImage, widget: published-readonly, required: false }
+      - { label: Title image description, name: titleImageAlt, widget: published-readonly, required: false }
       - { label: Category, name: category, widget: published-readonly }
       - { label: Short summary, name: summary, widget: published-readonly }
       - { label: Publication date, name: dateIso, widget: published-readonly }
