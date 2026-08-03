@@ -47,7 +47,6 @@ export type Article = {
   dateIso: string;
   category: CategoryName;
   summary: string;
-  readTime: string;
   featured: boolean;
   artwork: ArticleArtworkChoice;
   titleImage?: string;
@@ -61,7 +60,7 @@ const articlesDirectory = join(process.cwd(), "content", "articles");
 const articleAccents: ArticleAccent[] = ["sky", "aqua", "yellow", "coral", "lilac", "mint"];
 const allowedCategories = new Set<string>(categoryDetails.map((category) => category.name));
 const allowedAccents = new Set<string>(articleAccents);
-const authorPattern = /^[\p{L}][\p{L}'’ -]{0,29} \p{L}\.$/u;
+const authorPattern = /^[\p{L}][\p{L}'’ -]{0,29} \p{L}\.?$/u;
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 function requireString(value: unknown, field: string, fileName: string) {
@@ -94,11 +93,6 @@ function formatArticleDate(dateIso: string) {
   }).format(new Date(`${dateIso}T00:00:00Z`));
 }
 
-function calculateReadTime(body: string) {
-  const words = body.trim().split(/\s+/).filter(Boolean).length;
-  return `${Math.max(1, Math.ceil(words / 200))} min read`;
-}
-
 function hashSlug(slug: string) {
   return [...slug].reduce((hash, character) => (hash * 31 + character.charCodeAt(0)) >>> 0, 7);
 }
@@ -120,12 +114,12 @@ function validateArticleText(title: string, summary: string, author: string, bod
     throw new Error(`${fileName}: "summary" must contain between 20 and 220 characters.`);
   }
 
-  if (!authorPattern.test(author)) {
+  if (author !== "Anonymous" && !authorPattern.test(author)) {
     throw new Error(`${fileName}: "author" must use a first name and last initial, such as "Jordan P.".`);
   }
 
-  if (body.length < 100) {
-    throw new Error(`${fileName}: the article body must contain at least 100 characters.`);
+  if (body.length < 20) {
+    throw new Error(`${fileName}: the article body must contain at least 20 characters.`);
   }
 
   if (/<\/?[a-z][^>]*>/i.test(body)) {
@@ -161,15 +155,17 @@ function parseArticle(fileName: string): Article {
   const { data, content } = matter(source);
   const body = content.trim();
   const title = requireString(data.title, "title", fileName);
-  const author = requireString(data.author, "author", fileName);
+  const authorValue = data.author === undefined || data.author === null ? "" : String(data.author).trim();
+  const author = authorValue ? (authorValue.endsWith(".") ? authorValue : `${authorValue}.`) : "Anonymous";
   const category = requireString(data.category, "category", fileName);
   const summary = requireString(data.summary, "summary", fileName);
   const dateIso = normalizeDate(data.dateIso, fileName);
   const titleImage = normalizeTitleImage(data.titleImage, fileName);
-  const titleImageAlt = data.titleImageAlt === undefined ? "" : String(data.titleImageAlt).trim();
+  const requestedTitleImageAlt = data.titleImageAlt === undefined ? "" : String(data.titleImageAlt).trim();
+  const titleImageAlt = titleImage ? requestedTitleImageAlt || title : undefined;
 
-  if (titleImage && (titleImageAlt.length < 5 || titleImageAlt.length > 160)) {
-    throw new Error(`${fileName}: "titleImageAlt" must contain 5 to 160 characters when a title image is used.`);
+  if (titleImageAlt && titleImageAlt.length > 160) {
+    throw new Error(`${fileName}: "titleImageAlt" must contain no more than 160 characters.`);
   }
 
   if (!allowedCategories.has(category)) {
@@ -188,7 +184,6 @@ function parseArticle(fileName: string): Article {
     ? (requestedAccent as ArticleAccent)
     : getDefaultAccent(slug);
   const legacyDate = data.date === undefined ? "" : String(data.date).trim();
-  const legacyReadTime = data.readTime === undefined ? "" : String(data.readTime).trim();
   const parsedLegacySymbol = data.symbol === undefined ? "" : String(data.symbol).trim();
   const legacySymbol = /^\d{1,2}$/.test(parsedLegacySymbol)
     ? parsedLegacySymbol.padStart(2, "0")
@@ -204,11 +199,10 @@ function parseArticle(fileName: string): Article {
     dateIso,
     category: category as CategoryName,
     summary,
-    readTime: legacyReadTime || calculateReadTime(body),
     featured: data.featured === true || data.featured === "true",
     artwork: requestedArtwork,
     titleImage,
-    titleImageAlt: titleImage ? titleImageAlt : undefined,
+    titleImageAlt,
     accent,
     symbol: legacySymbol || getDefaultSymbol(slug),
     body,

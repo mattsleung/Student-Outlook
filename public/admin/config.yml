@@ -40,10 +40,12 @@ collections:
         widget: string
         pattern: ['^.{5,100}$', "Use a title between 5 and 100 characters."]
         hint: Use a clear title that tells readers what the article is about.
-      - label: Author display name
+      - label: Author display name (optional)
         name: author
         widget: string
-        hint: Use a first name and last initial, such as Jordan P. Never enter private contact information.
+        required: false
+        pattern: ["^$|^[A-Za-z][A-Za-z'’ -]{0,29} [A-Za-z]\\.?$", "Use a first name and last initial, such as Jordan P., or leave this blank."]
+        hint: Use a first name and last initial, such as Jordan P. The final period is optional. Leave this blank to publish as Anonymous. Never enter private contact information.
       - label: Title image (optional)
         name: titleImage
         widget: image
@@ -52,13 +54,13 @@ collections:
         media_library:
           config:
             multiple: false
-        hint: Upload one JPG, PNG, WebP, or AVIF title image no larger than 5 MB, or leave this blank to use the artwork choice below. Do not upload an identifiable photo of a student without documented permission.
+        hint: Upload one JPG, PNG, WebP, or AVIF title image no larger than 5 MB. Leave this blank to use automatically selected Student Outlook artwork. Do not upload an identifiable photo of a student without documented permission.
       - label: Title image description
         name: titleImageAlt
         widget: string
         required: false
-        pattern: ['^.{5,160}$', "Describe the image in 5 to 160 characters."]
-        hint: If you upload a title image, briefly describe what it shows for readers who cannot see it.
+        pattern: ['^.{0,160}$', "Keep the image description under 160 characters."]
+        hint: If you upload a title image, briefly describe what it shows for readers who cannot see it. If left blank, the article title is used.
       - label: Category
         name: category
         widget: select
@@ -79,16 +81,6 @@ collections:
         time_format: false
         format: YYYY-MM-DD
         hint: The owner will confirm this date before publication.
-      - label: Article artwork
-        name: artwork
-        widget: select
-        default: default
-        options:
-          - label: Student Outlook default artwork
-            value: default
-          - label: No artwork
-            value: none
-        hint: This is used only when no title image is uploaded. Default artwork uses an automatically selected Student Outlook color.
       - label: Suggest as the featured article
         name: featured
         widget: boolean
@@ -98,6 +90,7 @@ collections:
       - label: Article
         name: body
         widget: richtext
+        pattern: ['^[\s\S]{20,}$', "Write at least 20 characters."]
         buttons: [bold, italic, heading-two, bulleted-list]
         editor_components: []
         modes: [rich_text]
@@ -126,6 +119,5 @@ collections:
       - { label: Category, name: category, widget: published-readonly }
       - { label: Short summary, name: summary, widget: published-readonly }
       - { label: Publication date, name: dateIso, widget: published-readonly }
-      - { label: Article artwork, name: artwork, widget: published-readonly, required: false }
       - { label: Featured article, name: featured, widget: published-readonly, required: false }
       - { label: Article, name: body, widget: published-readonly }
