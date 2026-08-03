@@ -15,7 +15,7 @@ npm run dev
 Then open `http://localhost:3000`.
 
 The local dashboard file is available at `http://localhost:3000/admin/index.html`.
-Real writer login will not work until the OAuth setup in the editorial guide is complete.
+Writer login uses the Netlify OAuth helper configured in the editorial guide.
 
 ## Project checks
 

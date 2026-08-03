@@ -65,12 +65,12 @@ Use a **Writer** role for approved contributors. Writers may read and send
 messages and create threads, but they should not manage roles, create permanent
 invites, add bots, remove members, or change server settings.
 
-## Authentication setup still required
+## Authentication configuration
 
 GitHub Pages cannot safely store the private OAuth secret used during sign-in.
-Before the dashboard can accept real logins, the owner must configure Netlify as
-an OAuth secret-holder. GitHub Pages will continue hosting Student Outlook;
-Netlify will only complete the secure GitHub sign-in exchange.
+Student Outlook uses Netlify as an OAuth secret-holder. GitHub Pages continues
+hosting Student Outlook; Netlify only completes the secure GitHub sign-in
+exchange.
 
 1. Create a Netlify account and a small Netlify project connected to the
    Student Outlook repository. This project is not the public website.
@@ -82,8 +82,7 @@ Netlify will only complete the secure GitHub sign-in exchange.
    authentication-provider settings.
 6. Copy the project's `.netlify.app` hostname, without `https://` or a trailing
    slash.
-7. Replace `REPLACE_WITH_NETLIFY_SITE_HOSTNAME` in
-   `public/admin/config.yml` with that hostname.
+7. Set `site_domain` in `public/admin/config.yml` to that hostname.
 8. Test with one writer before inviting the rest of the group.
 
 Never commit the OAuth secret to this repository or send it through Discord.

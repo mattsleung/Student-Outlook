@@ -4,9 +4,9 @@ backend:
   branch: main
   open_authoring: true
   squash_merges: true
-  # Replace this after creating the Netlify OAuth helper project described in
-  # docs/editorial-workflow.md. Do not place an OAuth secret in this file.
-  site_domain: REPLACE_WITH_NETLIFY_SITE_HOSTNAME
+  # Netlify securely holds the GitHub OAuth secret. Never place that secret in
+  # this public configuration file.
+  site_domain: student-outlook-auth.netlify.app
 
 site_url: https://mattsleung.github.io/Student-Outlook/
 display_url: https://mattsleung.github.io/Student-Outlook/
