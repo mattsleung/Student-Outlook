@@ -25,15 +25,37 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Reject article media uploads
+      - name: Validate article title-image uploads
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
         run: |
-          if git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep -q '^public/article-media/'; then
-            echo "Image uploads are not enabled for Student Outlook articles."
+          deleted_media=$(git diff --diff-filter=D --name-only "$BASE_SHA" "$HEAD_SHA" -- public/article-media)
+          if [ -n "$deleted_media" ] && [ "${PR_AUTHOR,,}" != "mattsleung" ]; then
+            echo "Only mattsleung may delete article media."
             exit 1
           fi
+
+          while IFS= read -r image; do
+            [ -z "$image" ] && continue
+            case "${image,,}" in
+              *.avif|*.jpg|*.jpeg|*.png|*.webp) ;;
+              *) echo "Unsupported article image type: $image"; exit 1 ;;
+            esac
+
+            size=$(stat -c%s "$image")
+            if [ "$size" -gt 5242880 ]; then
+              echo "Article title images must be no larger than 5 MB: $image"
+              exit 1
+            fi
+
+            mime=$(file --brief --mime-type "$image")
+            case "$mime" in
+              image/avif|image/jpeg|image/png|image/webp) ;;
+              *) echo "File contents are not a supported image: $image ($mime)"; exit 1 ;;
+            esac
+          done < <(git diff --diff-filter=AM --name-only "$BASE_SHA" "$HEAD_SHA" -- public/article-media)
 
       - name: Protect published articles
         env:

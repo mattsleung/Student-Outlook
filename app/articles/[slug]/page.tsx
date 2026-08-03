@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { ArticleArtwork } from "@/components/ArticleArtwork";
 import { ArticleCard } from "@/components/ArticleCard";
+import { ArticleTitleImage } from "@/components/ArticleTitleImage";
 import { MarkdownArticle } from "@/components/MarkdownArticle";
 import { getAllArticles, getArticleBySlug, getCategorySlug } from "@/lib/articles";
 
@@ -35,6 +36,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   const categorySlug = getCategorySlug(article.category);
   const hasArtwork = article.artwork === "default";
+  const hasVisual = Boolean(article.titleImage) || hasArtwork;
   const relatedArticles = getAllArticles()
     .filter((item) => item.slug !== article.slug)
     .slice(0, 2);
@@ -43,7 +45,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     <main id="main-content">
       <article>
         <header
-          className={`article-hero section-shell${hasArtwork ? "" : " article-hero-no-artwork"}`}
+          className={`article-hero section-shell${hasVisual ? "" : " article-hero-no-artwork"}`}
         >
           <div className="article-hero-copy">
             <Link className="category-tag" href={`/categories/${categorySlug}`}>
@@ -63,7 +65,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </div>
             </div>
           </div>
-          {hasArtwork && <ArticleArtwork accent={article.accent} symbol={article.symbol} />}
+          {article.titleImage ? (
+            <ArticleTitleImage alt={article.titleImageAlt ?? ""} src={article.titleImage} />
+          ) : hasArtwork ? (
+            <ArticleArtwork accent={article.accent} symbol={article.symbol} />
+          ) : null}
         </header>
 
         <div className="article-layout section-shell">

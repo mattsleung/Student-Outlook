@@ -3,16 +3,22 @@ import Link from "next/link";
 import { getCategorySlug, type Article } from "@/lib/articles";
 
 import { ArticleArtwork } from "./ArticleArtwork";
+import { ArticleTitleImage } from "./ArticleTitleImage";
 
 export function ArticleCard({ article }: { article: Article }) {
   const categorySlug = getCategorySlug(article.category);
   const hasArtwork = article.artwork === "default";
+  const hasVisual = Boolean(article.titleImage) || hasArtwork;
 
   return (
-    <article className={`article-card${hasArtwork ? "" : " article-card-no-artwork"}`}>
-      {hasArtwork && (
+    <article className={`article-card${hasVisual ? "" : " article-card-no-artwork"}`}>
+      {hasVisual && (
         <Link className="card-art-link" href={`/articles/${article.slug}`} tabIndex={-1}>
-          <ArticleArtwork accent={article.accent} symbol={article.symbol} compact />
+          {article.titleImage ? (
+            <ArticleTitleImage alt={article.titleImageAlt ?? ""} compact src={article.titleImage} />
+          ) : (
+            <ArticleArtwork accent={article.accent} symbol={article.symbol} compact />
+          )}
         </Link>
       )}
       <div className="article-card-content">
