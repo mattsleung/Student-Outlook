@@ -7,6 +7,8 @@ backend:
   # Netlify securely holds the GitHub OAuth secret. Never place that secret in
   # this public configuration file.
   site_domain: student-outlook-auth.netlify.app
+  base_url: https://student-outlook-auth.netlify.app
+  auth_endpoint: .netlify/functions/auth
 
 site_url: https://mattsleung.github.io/Student-Outlook/
 display_url: https://mattsleung.github.io/Student-Outlook/
