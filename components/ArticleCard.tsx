@@ -1,43 +1,44 @@
 import Link from "next/link";
 
-import { getCategorySlug, type Article } from "@/lib/articles";
+import type { Article } from "@/lib/articles";
 
 import { ArticleArtwork } from "./ArticleArtwork";
 import { ArticleTitleImage } from "./ArticleTitleImage";
 
 export function ArticleCard({ article }: { article: Article }) {
-  const categorySlug = getCategorySlug(article.category);
   const hasArtwork = article.artwork === "default";
   const hasVisual = Boolean(article.titleImage) || hasArtwork;
 
   return (
     <article className={`article-card${hasVisual ? "" : " article-card-no-artwork"}`}>
-      {hasVisual && (
-        <Link className="card-art-link" href={`/articles/${article.slug}`} tabIndex={-1}>
-          {article.titleImage ? (
-            <ArticleTitleImage alt={article.titleImageAlt ?? ""} compact src={article.titleImage} />
-          ) : (
-            <ArticleArtwork accent={article.accent} symbol={article.symbol} compact />
-          )}
-        </Link>
-      )}
-      <div className="article-card-content">
-        <div className="article-meta-row">
-          <Link className="category-tag" href={`/categories/${categorySlug}`}>
-            {article.category}
-          </Link>
+      <Link className="article-card-link" href={`/articles/${article.slug}`}>
+        {hasVisual && (
+          <div className="card-art-link">
+            {article.titleImage ? (
+              <ArticleTitleImage
+                alt={article.titleImageAlt ?? ""}
+                compact
+                src={article.titleImage}
+              />
+            ) : (
+              <ArticleArtwork accent={article.accent} symbol={article.symbol} compact />
+            )}
+          </div>
+        )}
+        <div className="article-card-content">
+          <div className="article-meta-row">
+            <span className="category-tag">{article.category}</span>
+          </div>
+          <h3>{article.title}</h3>
+          <p>{article.summary}</p>
+          <div className="article-card-footer">
+            <span>By {article.author}</span>
+            <span className="read-link">
+              Read <span aria-hidden="true">→</span>
+            </span>
+          </div>
         </div>
-        <h3>
-          <Link href={`/articles/${article.slug}`}>{article.title}</Link>
-        </h3>
-        <p>{article.summary}</p>
-        <div className="article-card-footer">
-          <span>By {article.author}</span>
-          <Link className="read-link" href={`/articles/${article.slug}`} aria-label={`Read ${article.title}`}>
-            Read <span aria-hidden="true">→</span>
-          </Link>
-        </div>
-      </div>
+      </Link>
     </article>
   );
 }
