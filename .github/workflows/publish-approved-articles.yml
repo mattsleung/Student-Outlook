@@ -1,0 +1,54 @@
+name: Publish approved Student Outlook articles
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [closed]
+    paths:
+      - content/submissions/**
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-approved-articles
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: >-
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.merged_by.login == 'mattsleung'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the approved main branch
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: Move approved drafts into the published collection
+        run: node scripts/promote-submissions.mjs
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate the public website before publishing
+        run: npm run build
+
+      - name: Save the published articles
+        run: |
+          git config user.name "Student Outlook Publisher"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/submissions content/articles
+          if git diff --cached --quiet; then
+            echo "No submissions needed promotion."
+            exit 0
+          fi
+          git commit -m "Publish approved article submissions"
+          git push origin main

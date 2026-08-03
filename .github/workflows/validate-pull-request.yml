@@ -35,14 +35,27 @@ jobs:
             exit 1
           fi
 
+      - name: Protect published articles
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: node scripts/validate-published-changes.mjs "$BASE_SHA" "$HEAD_SHA" "$PR_AUTHOR"
+
       - name: Run ESLint
         run: npm run lint
 
       - name: Test writer authentication
         run: npm run test:auth
 
+      - name: Test the publishing workflow
+        run: npm run test:publishing
+
       - name: Check TypeScript
         run: npm run typecheck
+
+      - name: Prepare draft articles for build validation
+        run: node scripts/promote-submissions.mjs
 
       - name: Build the complete website
         run: npm run build

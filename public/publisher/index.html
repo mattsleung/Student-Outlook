@@ -5,23 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
     <meta name="referrer" content="no-referrer" />
-    <title>Student Outlook Writing Dashboard</title>
+    <title>Student Outlook Owner Publisher</title>
     <script>
       if (window.location.hostname === "mattsleung.github.io") {
-        const dashboardUrl = new URL(
-          "https://student-outlook-auth.netlify.app/admin/",
+        const publisherUrl = new URL(
+          "https://student-outlook-auth.netlify.app/publisher/",
         );
-        dashboardUrl.hash = window.location.hash;
-        window.location.replace(dashboardUrl.toString());
+        publisherUrl.hash = window.location.hash;
+        window.location.replace(publisherUrl.toString());
       }
+      window.CMS_MANUAL_INIT = true;
     </script>
   </head>
   <body>
-    <script>
-      window.CMS_MANUAL_INIT = true;
-    </script>
     <script src="https://unpkg.com/decap-cms@3.12.2/dist/decap-cms.js"></script>
-    <script src="published-widget.js"></script>
     <script>
       window.CMS.init();
     </script>

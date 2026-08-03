@@ -3,6 +3,7 @@ import test from "node:test";
 
 import { handler as startAuthentication } from "../netlify/functions/auth.mjs";
 import { handler as finishAuthentication } from "../netlify/functions/oauth-callback.mjs";
+import { handler as startPublisherAuthentication } from "../netlify/functions/publisher-auth.mjs";
 import {
   createSignedState,
   parseAllowedUsers,
@@ -78,6 +79,31 @@ test("authentication start creates a signed request and secure cookie", async ()
   }
 });
 
+test("owner authentication creates publisher-only signed state", async () => {
+  const previousClientId = process.env.GITHUB_OAUTH_CLIENT_ID;
+  const previousStateSecret = process.env.OAUTH_STATE_SECRET;
+  process.env.GITHUB_OAUTH_CLIENT_ID = "test-client";
+  process.env.OAUTH_STATE_SECRET = secret;
+
+  try {
+    const response = await startPublisherAuthentication({
+      httpMethod: "GET",
+      queryStringParameters: { provider: "github" },
+    });
+    const state = new URL(response.headers.Location).searchParams.get("state");
+    const cookieNonce = response.headers["Set-Cookie"].match(
+      /student_outlook_oauth_state=([^;]+)/,
+    )[1];
+    assert.equal(
+      verifySignedState(state, secret, decodeURIComponent(cookieNonce)).audience,
+      "publisher",
+    );
+  } finally {
+    process.env.GITHUB_OAUTH_CLIENT_ID = previousClientId;
+    process.env.OAUTH_STATE_SECRET = previousStateSecret;
+  }
+});
+
 test("callback denies an unapproved GitHub login and revokes its token", async () => {
   const previousFetch = globalThis.fetch;
   const previousEnvironment = {
@@ -117,6 +143,59 @@ test("callback denies an unapproved GitHub login and revokes its token", async (
     assert.equal(response.statusCode, 403);
     assert.ok(requests.some((request) => request.method === "DELETE"));
     assert.doesNotMatch(response.body, /denied-token/);
+  } finally {
+    globalThis.fetch = previousFetch;
+    process.env.ALLOWED_GITHUB_USERS = previousEnvironment.allowed;
+    process.env.GITHUB_OAUTH_CLIENT_ID = previousEnvironment.clientId;
+    process.env.GITHUB_OAUTH_CLIENT_SECRET = previousEnvironment.clientSecret;
+    process.env.OAUTH_STATE_SECRET = previousEnvironment.stateSecret;
+  }
+});
+
+test("publisher callback rejects an approved writer who is not mattsleung", async () => {
+  const previousFetch = globalThis.fetch;
+  const previousEnvironment = {
+    allowed: process.env.ALLOWED_GITHUB_USERS,
+    clientId: process.env.GITHUB_OAUTH_CLIENT_ID,
+    clientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET,
+    stateSecret: process.env.OAUTH_STATE_SECRET,
+  };
+  const created = createSignedState(
+    secret,
+    Date.now(),
+    "publisher-browser-nonce",
+    "publisher",
+  );
+
+  process.env.ALLOWED_GITHUB_USERS = "mattsleung,approved-writer";
+  process.env.GITHUB_OAUTH_CLIENT_ID = "test-client";
+  process.env.GITHUB_OAUTH_CLIENT_SECRET = "test-secret";
+  process.env.OAUTH_STATE_SECRET = secret;
+  globalThis.fetch = async (url) => {
+    if (String(url).includes("login/oauth/access_token")) {
+      return new Response(JSON.stringify({ access_token: "writer-token" }), {
+        status: 200,
+      });
+    }
+    if (String(url).endsWith("/user")) {
+      return new Response(JSON.stringify({ login: "approved-writer" }), {
+        status: 200,
+      });
+    }
+    return new Response(null, { status: 204 });
+  };
+
+  try {
+    const response = await finishAuthentication({
+      httpMethod: "GET",
+      headers: {
+        cookie: "student_outlook_oauth_state=publisher-browser-nonce",
+      },
+      queryStringParameters: { code: "test-code", state: created.state },
+    });
+    assert.equal(response.statusCode, 403);
+    assert.match(response.body, /Only the Student Outlook owner/);
+    assert.doesNotMatch(response.body, /writer-token/);
   } finally {
     globalThis.fetch = previousFetch;
     process.env.ALLOWED_GITHUB_USERS = previousEnvironment.allowed;

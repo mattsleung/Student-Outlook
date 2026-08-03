@@ -22,11 +22,11 @@ media_folder: public/article-media
 public_folder: /Student-Outlook/article-media
 
 collections:
-  - name: articles
+  - name: article_drafts
     label: Articles
     label_singular: Article
-    description: Write an article, save it as a draft, and send it to the owner for review.
-    folder: content/articles
+    description: Create and revise drafts here. After the owner publishes an article, it moves to Published.
+    folder: content/submissions
     create: true
     delete: false
     extension: md
@@ -91,3 +91,27 @@ collections:
         modes: [rich_text]
         sanitize_preview: true
         hint: Drafts may be publicly visible on GitHub. Never include private information, school names, schedules, addresses, or exact locations.
+  - name: published_articles
+    label: Published
+    label_singular: Published article
+    description: Read articles that are already on the public website. Only mattsleung can change or remove them.
+    folder: content/articles
+    create: false
+    delete: false
+    publish: false
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    summary: "{{title}} — {{author}}"
+    sortable_fields: [title, dateIso, category]
+    editor:
+      preview: false
+    fields:
+      - { label: Title, name: title, widget: published-readonly }
+      - { label: Author display name, name: author, widget: published-readonly }
+      - { label: Category, name: category, widget: published-readonly }
+      - { label: Short summary, name: summary, widget: published-readonly }
+      - { label: Publication date, name: dateIso, widget: published-readonly }
+      - { label: Article artwork, name: artwork, widget: published-readonly, required: false }
+      - { label: Featured article, name: featured, widget: published-readonly, required: false }
+      - { label: Article, name: body, widget: published-readonly }
