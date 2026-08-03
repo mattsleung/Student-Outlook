@@ -16,7 +16,7 @@ adds or removes writers in Netlify without changing the public repository.
 1. Open the writing dashboard at
    `https://student-outlook-auth.netlify.app/admin/`.
 2. Sign in with the approved GitHub account.
-3. Select **New Article**.
+3. Select **Articles**, then select **New Article**.
 4. Complete every required field.
 5. Choose either Student Outlook default artwork or no artwork. Image uploads
    are not enabled.
@@ -25,6 +25,8 @@ adds or removes writers in Netlify without changing the public repository.
 8. Share the GitHub pull-request link in the private Discord draft-review
    channel.
 9. Make requested changes in the writing dashboard.
+10. Use **Published** to read completed articles. Published entries have no
+    publishing or editing controls for writers.
 
 Drafts and pull requests may be publicly visible. Never include personal email
 addresses, phone numbers, school names, schedules, addresses, exact locations,
@@ -44,8 +46,22 @@ Only the repository owner performs the final review and publication.
 4. Ask the writer for changes when necessary.
 5. Resolve completed review conversations.
 6. Merge the pull request into `main`.
-7. Wait for the GitHub Pages workflow to finish.
-8. Open the public article and check its layout on a phone and a computer.
+7. The protected publishing workflow moves the approved file from
+   `content/submissions` to `content/articles` and saves that change to `main`.
+8. Wait for the publishing and GitHub Pages workflows to finish.
+9. Open the public article and check its layout on a phone and a computer.
+
+Only pull requests authored by `mattsleung` may add, edit, rename, or remove a
+file in `content/articles`. Other writers must work in `content/submissions`.
+The dashboard presents published fields as read-only, and the GitHub check is
+the security layer that prevents the interface from being bypassed.
+
+The writers' **Published** dashboard view is intentionally read-only. When a
+published article needs a correction or must be removed, the owner uses the
+separate owner page at
+`https://student-outlook-auth.netlify.app/publisher/`. That page uses a stricter
+sign-in check that accepts only `mattsleung`. GitHub also accepts the resulting
+protected change only when the pull-request author is `mattsleung`.
 
 Merging the pull request is the publishing confirmation. Student Outlook does
 not add a separate passkey, email, phone, or two-factor confirmation.

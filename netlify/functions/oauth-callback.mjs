@@ -62,7 +62,7 @@ export async function handler(event) {
     }
 
     const cookieNonce = readCookie(event.headers?.cookie, STATE_COOKIE);
-    verifySignedState(query.state, stateSecret, cookieNonce);
+    const verifiedState = verifySignedState(query.state, stateSecret, cookieNonce);
     if (!query.code) {
       throw new Error("GitHub did not return an authorization code.");
     }
@@ -99,10 +99,17 @@ export async function handler(event) {
     });
     const user = await userResponse.json();
     const login = typeof user.login === "string" ? user.login.toLowerCase() : "";
-    if (!userResponse.ok || !allowedUsers.has(login)) {
+    const isApproved =
+      verifiedState.audience === "publisher"
+        ? login === "mattsleung"
+        : allowedUsers.has(login);
+    if (!userResponse.ok || !isApproved) {
       await revokeToken(tokenData.access_token, clientId, clientSecret);
       return page(false, {
-        message: "This GitHub account is not an approved Student Outlook writer.",
+        message:
+          verifiedState.audience === "publisher"
+            ? "Only the Student Outlook owner can manage published articles."
+            : "This GitHub account is not an approved Student Outlook writer.",
       });
     }
 

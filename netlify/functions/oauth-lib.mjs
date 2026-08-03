@@ -21,7 +21,12 @@ export function parseAllowedUsers(value = "") {
   );
 }
 
-export function createSignedState(secret, now = Date.now(), nonce) {
+export function createSignedState(
+  secret,
+  now = Date.now(),
+  nonce,
+  audience = "writers",
+) {
   if (!secret || secret.length < 32) {
     throw new Error("OAUTH_STATE_SECRET must contain at least 32 characters.");
   }
@@ -31,6 +36,7 @@ export function createSignedState(secret, now = Date.now(), nonce) {
     JSON.stringify({
       nonce: stateNonce,
       issuedAt: now,
+      audience,
     }),
   ).toString("base64url");
 
@@ -69,6 +75,9 @@ export function verifySignedState(state, secret, cookieNonce, now = Date.now()) 
     now - data.issuedAt > STATE_MAX_AGE_MS
   ) {
     throw new Error("The authorization request has expired.");
+  }
+  if (data.audience !== "writers" && data.audience !== "publisher") {
+    throw new Error("The authorization request has an invalid audience.");
   }
 
   return data;

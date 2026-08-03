@@ -1,0 +1,74 @@
+backend:
+  name: github
+  repo: mattsleung/Student-Outlook
+  branch: main
+  open_authoring: true
+  squash_merges: true
+  site_domain: student-outlook-auth.netlify.app
+  base_url: https://student-outlook-auth.netlify.app
+  auth_endpoint: .netlify/functions/publisher-auth
+
+site_url: https://mattsleung.github.io/Student-Outlook/
+display_url: https://mattsleung.github.io/Student-Outlook/
+publish_mode: editorial_workflow
+show_preview_links: false
+media_folder: public/article-media
+public_folder: /Student-Outlook/article-media
+
+collections:
+  - name: published_articles
+    label: Published
+    label_singular: Published article
+    description: Owner-only controls for correcting or removing articles on the public website.
+    folder: content/articles
+    create: false
+    delete: true
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    summary: "{{title}} — {{author}}"
+    sortable_fields: [title, dateIso, category]
+    editor:
+      preview: false
+    fields:
+      - label: Title
+        name: title
+        widget: string
+        pattern: ['^.{5,100}$', "Use a title between 5 and 100 characters."]
+      - label: Author display name
+        name: author
+        widget: string
+        hint: Use a first name and last initial. Never enter private contact information.
+      - label: Category
+        name: category
+        widget: select
+        options: [Study Tips, Social Tips, Student Stories, Entertainment]
+      - label: Short summary
+        name: summary
+        widget: text
+        pattern: ['^[\s\S]{20,220}$', "Use a summary between 20 and 220 characters."]
+      - label: Publication date
+        name: dateIso
+        widget: datetime
+        date_format: MMMM D, YYYY
+        time_format: false
+        format: YYYY-MM-DD
+      - label: Article artwork
+        name: artwork
+        widget: select
+        default: default
+        options:
+          - { label: Student Outlook default artwork, value: default }
+          - { label: No artwork, value: none }
+      - label: Featured article
+        name: featured
+        widget: boolean
+        default: false
+        required: false
+      - label: Article
+        name: body
+        widget: richtext
+        buttons: [bold, italic, heading-two, bulleted-list]
+        editor_components: []
+        modes: [rich_text]
+        sanitize_preview: true
