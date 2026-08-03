@@ -6,6 +6,15 @@
     <meta name="robots" content="noindex, nofollow" />
     <meta name="referrer" content="no-referrer" />
     <title>Student Outlook Writing Dashboard</title>
+    <script>
+      if (window.location.hostname === "mattsleung.github.io") {
+        const dashboardUrl = new URL(
+          "https://student-outlook-auth.netlify.app/admin/",
+        );
+        dashboardUrl.hash = window.location.hash;
+        window.location.replace(dashboardUrl.toString());
+      }
+    </script>
   </head>
   <body>
     <script src="https://unpkg.com/decap-cms@3.12.2/dist/decap-cms.js"></script>

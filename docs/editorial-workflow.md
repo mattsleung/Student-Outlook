@@ -10,7 +10,7 @@ not linked from the public website, but its address and GitHub pull requests are
 not secret.
 
 1. Open the writing dashboard at
-   `https://mattsleung.github.io/Student-Outlook/admin/`.
+   `https://student-outlook-auth.netlify.app/admin/`.
 2. Sign in with the approved GitHub account.
 3. Select **New Article**.
 4. Complete every required field.

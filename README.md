@@ -16,6 +16,8 @@ Then open `http://localhost:3000`.
 
 The local dashboard file is available at `http://localhost:3000/admin/index.html`.
 Writer login uses the Netlify OAuth helper configured in the editorial guide.
+The production writing dashboard is available at
+`https://student-outlook-auth.netlify.app/admin/`.
 
 ## Project checks
 
