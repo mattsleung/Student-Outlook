@@ -18,57 +18,25 @@ export default function AboutPage() {
         </p>
       </header>
 
-      <section className="section-shell mission-section" aria-labelledby="why-title">
-        <div className="mission-statement">
-          <span className="statement-mark" aria-hidden="true">“</span>
-          <h2 id="why-title">We believe student voices deserve care, curiosity, and room to grow.</h2>
+      <section className="section-shell designer-message" aria-labelledby="designer-message-title">
+        <div>
+          <p className="eyebrow">A message from the designer</p>
+          <h2 id="designer-message-title">Why Student Outlook exists</h2>
         </div>
-        <div className="mission-copy">
+        <blockquote>
           <p>
-            School life is full of questions, discoveries, challenges, and funny moments.
-            Student Outlook creates a welcoming place to explore all of them through clear,
-            age-appropriate articles.
+            I created Student Outlook with a simple mission: to give middle and high school
+            students a welcoming place to find useful advice, thoughtful perspectives, and
+            something enjoyable to read.
           </p>
           <p>
-            Our regular articles come from a small, invited group of approved writers known
-            by the editor. Short community tips, habits, methods, or jokes may occasionally be
-            selected for special collections, with credit given by first name and last initial.
-            Every piece is reviewed before publication, and contributor privacy comes first.
+            School can bring exciting opportunities as well as difficult moments. I hope this
+            publication helps students feel understood, discover ideas that make their lives a
+            little easier, and remember that their experiences matter. Every article should
+            leave readers with something helpful, encouraging, or worth thinking about.
           </p>
-        </div>
-      </section>
-
-      <section className="values-section">
-        <div className="section-shell">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">What guides us</p>
-              <h2>Four values, one shared outlook</h2>
-            </div>
-          </div>
-          <div className="values-grid">
-            <article>
-              <span>01</span>
-              <h3>Useful</h3>
-              <p>Ideas should give readers something clear to try, consider, or remember.</p>
-            </article>
-            <article>
-              <span>02</span>
-              <h3>Encouraging</h3>
-              <p>Honest support matters more than pretending everything is easy.</p>
-            </article>
-            <article>
-              <span>03</span>
-              <h3>Curious</h3>
-              <p>We make room for questions, creativity, and different ways of thinking.</p>
-            </article>
-            <article>
-              <span>04</span>
-              <h3>Respectful</h3>
-              <p>Every article should protect privacy and treat its readers with care.</p>
-            </article>
-          </div>
-        </div>
+          <footer>— Matthew Leung, Website Designer</footer>
+        </blockquote>
       </section>
 
       <section className="section-shell about-cta">

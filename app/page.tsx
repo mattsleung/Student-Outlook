@@ -3,12 +3,11 @@ import Link from "next/link";
 import { ArticleArtwork } from "@/components/ArticleArtwork";
 import { ArticleCard } from "@/components/ArticleCard";
 import { ArticleTitleImage } from "@/components/ArticleTitleImage";
-import { categoryDetails, getAllArticles, getCategorySlug } from "@/lib/articles";
+import { categoryDetails, getAllArticles } from "@/lib/articles";
 
 export default function HomePage() {
   const articles = getAllArticles();
   const featuredArticle = articles.find((article) => article.featured) ?? articles[0];
-  const featuredCategorySlug = getCategorySlug(featuredArticle.category);
   const featuredHasArtwork = featuredArticle.artwork === "default";
   const featuredHasVisual = Boolean(featuredArticle.titleImage) || featuredHasArtwork;
 
@@ -73,8 +72,9 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <article
+        <Link
           className={`featured-article${featuredHasVisual ? "" : " featured-article-no-artwork"}`}
+          href={`/articles/${featuredArticle.slug}`}
         >
           {featuredArticle.titleImage ? (
             <ArticleTitleImage alt={featuredArticle.titleImageAlt ?? ""} src={featuredArticle.titleImage} />
@@ -82,19 +82,17 @@ export default function HomePage() {
             <ArticleArtwork accent={featuredArticle.accent} symbol={featuredArticle.symbol} />
           ) : null}
           <div className="featured-content">
-            <Link className="category-tag" href={`/categories/${featuredCategorySlug}`}>
-              {featuredArticle.category}
-            </Link>
+            <span className="category-tag">{featuredArticle.category}</span>
             <h3>{featuredArticle.title}</h3>
             <p>{featuredArticle.summary}</p>
             <div className="featured-byline">
               <span>By {featuredArticle.author}</span>
             </div>
-            <Link className="button button-dark" href={`/articles/${featuredArticle.slug}`}>
+            <span className="button button-dark">
               Read the story <span aria-hidden="true">→</span>
-            </Link>
+            </span>
           </div>
-        </article>
+        </Link>
       </section>
 
       <section className="section-shell categories-section" aria-labelledby="categories-title">
