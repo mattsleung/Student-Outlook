@@ -38,6 +38,9 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+      - name: Test writer authentication
+        run: npm run test:auth
+
       - name: Check TypeScript
         run: npm run typecheck
 

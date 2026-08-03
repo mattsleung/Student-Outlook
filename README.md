@@ -30,6 +30,7 @@ npm run build
 ## Article publishing
 
 The planned Decap CMS dashboard uses Open Authoring. Writers create drafts, while the
-repository owner performs the final review and merge. See
+repository owner performs the final review and merge. A Netlify authentication function
+limits dashboard access to GitHub usernames approved in private project settings. See
 [`docs/editorial-workflow.md`](docs/editorial-workflow.md) for the writer, owner, Discord,
 and authentication steps.

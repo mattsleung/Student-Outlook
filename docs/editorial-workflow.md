@@ -9,6 +9,10 @@ as collaborators to the official Student Outlook repository. The dashboard is
 not linked from the public website, but its address and GitHub pull requests are
 not secret.
 
+Only GitHub usernames listed in the private Netlify
+`ALLOWED_GITHUB_USERS` environment variable can enter the dashboard. The owner
+adds or removes writers in Netlify without changing the public repository.
+
 1. Open the writing dashboard at
    `https://student-outlook-auth.netlify.app/admin/`.
 2. Sign in with the approved GitHub account.
@@ -26,10 +30,8 @@ Drafts and pull requests may be publicly visible. Never include personal email
 addresses, phone numbers, school names, schedules, addresses, exact locations,
 or other identifying information.
 
-Open Authoring can technically receive a proposal from another GitHub user who
-finds the dashboard. That person still cannot publish or change `main`; the
-owner should close unexpected pull requests without following their links or
-downloading their files.
+Open Authoring still stores each writer's work in that writer's GitHub fork.
+Only the owner can merge a proposal into `main` and publish it.
 
 ## Owner and publisher
 
@@ -77,13 +79,27 @@ exchange.
 2. In GitHub, create an OAuth application named **Student Outlook Writing
    Dashboard**.
 3. Use `https://mattsleung.github.io/Student-Outlook/` as its homepage URL.
-4. Use `https://api.netlify.com/auth/done` as its authorization callback URL.
-5. Copy the OAuth client ID and secret into the Netlify project's GitHub
-   authentication-provider settings.
-6. Copy the project's `.netlify.app` hostname, without `https://` or a trailing
-   slash.
-7. Set `site_domain` in `public/admin/config.yml` to that hostname.
-8. Test with one writer before inviting the rest of the group.
+4. Use
+   `https://student-outlook-auth.netlify.app/.netlify/functions/oauth-callback`
+   as its authorization callback URL.
+5. In the Netlify project's environment variables, set:
+   - `GITHUB_OAUTH_CLIENT_ID` to the OAuth application's client ID.
+   - `GITHUB_OAUTH_CLIENT_SECRET` to its client secret.
+   - `OAUTH_STATE_SECRET` to a private random value containing at least 32
+     characters.
+   - `ALLOWED_GITHUB_USERS` to a comma-separated list of exact GitHub usernames,
+     starting with `mattsleung`.
+6. Scope every secret and allowlist variable to **Production only**. Never make
+   them available to deploy previews, because a proposed pull request can
+   change preview code.
+7. Test the owner account and one writer account before inviting the rest of the
+   group.
 
-Never commit the OAuth secret to this repository or send it through Discord.
-Only the public client ID and the Netlify hostname may be shared when needed.
+To approve a writer later, edit `ALLOWED_GITHUB_USERS` in Netlify and trigger a
+new production deploy. To remove a writer, remove the username and deploy again.
+Usernames are compared without regard to uppercase or lowercase letters.
+
+Never commit the OAuth secret, state secret, or environment-variable values to
+this repository or send them through Discord. The authentication function
+checks a signed, ten-minute browser request before exchanging a GitHub code and
+returns a token only for an approved username.
