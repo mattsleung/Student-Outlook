@@ -13,7 +13,12 @@ type ArticlePageProps = {
 };
 
 export function generateStaticParams() {
-  return getAllArticles().map((article) => ({ slug: article.slug }));
+  const articles = getAllArticles();
+
+  // Next.js static export requires at least one value for a dynamic route.
+  return articles.length > 0
+    ? articles.map((article) => ({ slug: article.slug }))
+    : [{ slug: "publication-coming-soon" }];
 }
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
