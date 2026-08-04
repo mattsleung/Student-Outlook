@@ -52,11 +52,18 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <h2 id="category-articles-title">From {category.name}</h2>
           </div>
         </div>
-        <div className="article-grid article-grid-two">
-          {articles.map((article) => (
-            <ArticleCard article={article} key={article.slug} />
-          ))}
-        </div>
+        {articles.length > 0 ? (
+          <div className="article-grid article-grid-two">
+            {articles.map((article) => (
+              <ArticleCard article={article} key={article.slug} />
+            ))}
+          </div>
+        ) : (
+          <div className="empty-articles">
+            <h3>No articles in this category yet.</h3>
+            <p>New {category.name.toLowerCase()} articles will appear here after publication.</p>
+          </div>
+        )}
       </section>
     </main>
   );

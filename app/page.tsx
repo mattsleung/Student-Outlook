@@ -8,8 +8,8 @@ import { categoryDetails, getAllArticles } from "@/lib/articles";
 export default function HomePage() {
   const articles = getAllArticles();
   const featuredArticle = articles.find((article) => article.featured) ?? articles[0];
-  const featuredHasArtwork = featuredArticle.artwork === "default";
-  const featuredHasVisual = Boolean(featuredArticle.titleImage) || featuredHasArtwork;
+  const featuredHasArtwork = featuredArticle?.artwork === "default";
+  const featuredHasVisual = Boolean(featuredArticle?.titleImage) || featuredHasArtwork;
 
   return (
     <main id="main-content">
@@ -72,27 +72,34 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <Link
-          className={`featured-article${featuredHasVisual ? "" : " featured-article-no-artwork"}`}
-          href={`/articles/${featuredArticle.slug}`}
-        >
-          {featuredArticle.titleImage ? (
-            <ArticleTitleImage alt={featuredArticle.titleImageAlt ?? ""} src={featuredArticle.titleImage} />
-          ) : featuredHasArtwork ? (
-            <ArticleArtwork accent={featuredArticle.accent} symbol={featuredArticle.symbol} />
-          ) : null}
-          <div className="featured-content">
-            <span className="category-tag">{featuredArticle.category}</span>
-            <h3>{featuredArticle.title}</h3>
-            <p>{featuredArticle.summary}</p>
-            <div className="featured-byline">
-              <span>By {featuredArticle.author}</span>
+        {featuredArticle ? (
+          <Link
+            className={`featured-article${featuredHasVisual ? "" : " featured-article-no-artwork"}`}
+            href={`/articles/${featuredArticle.slug}`}
+          >
+            {featuredArticle.titleImage ? (
+              <ArticleTitleImage alt={featuredArticle.titleImageAlt ?? ""} src={featuredArticle.titleImage} />
+            ) : featuredHasArtwork ? (
+              <ArticleArtwork accent={featuredArticle.accent} symbol={featuredArticle.symbol} />
+            ) : null}
+            <div className="featured-content">
+              <span className="category-tag">{featuredArticle.category}</span>
+              <h3>{featuredArticle.title}</h3>
+              <p>{featuredArticle.summary}</p>
+              <div className="featured-byline">
+                <span>By {featuredArticle.author}</span>
+              </div>
+              <span className="button button-dark">
+                Read the story <span aria-hidden="true">→</span>
+              </span>
             </div>
-            <span className="button button-dark">
-              Read the story <span aria-hidden="true">→</span>
-            </span>
+          </Link>
+        ) : (
+          <div className="empty-articles">
+            <h3>Our first articles are on the way.</h3>
+            <p>Check back soon for new stories, tips, and creative ideas from Student Outlook.</p>
           </div>
-        </Link>
+        )}
       </section>
 
       <section className="section-shell categories-section" aria-labelledby="categories-title">
@@ -137,11 +144,18 @@ export default function HomePage() {
             Browse the archive <span aria-hidden="true">→</span>
           </Link>
         </div>
-        <div className="article-grid">
-          {articles.map((article) => (
-            <ArticleCard article={article} key={article.slug} />
-          ))}
-        </div>
+        {articles.length > 0 ? (
+          <div className="article-grid">
+            {articles.map((article) => (
+              <ArticleCard article={article} key={article.slug} />
+            ))}
+          </div>
+        ) : (
+          <div className="empty-articles">
+            <h3>Nothing published yet.</h3>
+            <p>The latest Student Outlook articles will appear here after they are approved.</p>
+          </div>
+        )}
       </section>
 
       <section className="section-shell invitation-section" aria-labelledby="invitation-title">

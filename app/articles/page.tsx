@@ -29,11 +29,18 @@ export default function ArticlesPage() {
             <h2 id="all-articles-title">The latest from Student Outlook</h2>
           </div>
         </div>
-        <div className="article-grid">
-          {articles.map((article) => (
-            <ArticleCard article={article} key={article.slug} />
-          ))}
-        </div>
+        {articles.length > 0 ? (
+          <div className="article-grid">
+            {articles.map((article) => (
+              <ArticleCard article={article} key={article.slug} />
+            ))}
+          </div>
+        ) : (
+          <div className="empty-articles">
+            <h3>Our first articles are on the way.</h3>
+            <p>New stories will appear here after they are reviewed and published.</p>
+          </div>
+        )}
       </section>
     </main>
   );
