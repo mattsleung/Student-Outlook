@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { ThemeToggle } from "./ThemeToggle";
+
 export function SiteFooter() {
   return (
     <footer className="site-footer">
@@ -30,6 +32,9 @@ export function SiteFooter() {
       <div className="footer-bottom">
         <p>© 2026 Student Outlook. Built for curious students.</p>
         <p>Placeholder publication for demonstration.</p>
+      </div>
+      <div className="footer-theme-control">
+        <ThemeToggle />
       </div>
     </footer>
   );

@@ -17,7 +17,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en" data-scroll-behavior="smooth" data-theme="dark" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var theme=localStorage.getItem("student-outlook-theme");if(theme==="light"||theme==="dark"){document.documentElement.dataset.theme=theme}}catch{}`,
+          }}
+        />
+      </head>
       <body>
         <a className="skip-link" href="#main-content">
           Skip to main content
