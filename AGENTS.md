@@ -10,8 +10,8 @@ written by a small group of approved contributors.
 
 The main content categories are:
 
-- Study Tips
-- Social Tips
+- Academic Life
+- Student Lifestyle
 - Student Stories
 - Entertainment
 

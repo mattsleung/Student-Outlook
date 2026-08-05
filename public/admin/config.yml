@@ -65,8 +65,8 @@ collections:
         name: category
         widget: select
         options:
-          - Study Tips
-          - Social Tips
+          - Academic Life
+          - Student Lifestyle
           - Student Stories
           - Entertainment
       - label: Short summary

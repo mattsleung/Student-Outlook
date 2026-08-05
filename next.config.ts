@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
   basePath: isGitHubPagesBuild ? "/Student-Outlook" : "",
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;

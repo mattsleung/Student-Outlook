@@ -5,14 +5,14 @@ import matter from "gray-matter";
 
 export const categoryDetails = [
   {
-    name: "Study Tips",
+    name: "Academic Life",
     slug: "study-tips",
     description: "Practical ways to plan, focus, and learn with less stress.",
     number: "01",
     accent: "sky",
   },
   {
-    name: "Social Tips",
+    name: "Student Lifestyle",
     slug: "social-tips",
     description: "Thoughtful ways to connect, communicate, and handle everyday relationships.",
     number: "02",

@@ -25,15 +25,13 @@ export default function AboutPage() {
         </div>
         <blockquote>
           <p>
-            I created Student Outlook with a simple mission: to give middle and high school
-            students a welcoming place to find useful advice, thoughtful perspectives, and
-            something enjoyable to read.
+            I created Student Outlook with a simple mission: to give students a place with
+            helpful advice and new perspectives.
           </p>
           <p>
-            School can bring exciting opportunities as well as difficult moments. I hope this
-            publication helps students feel understood, discover ideas that make their lives a
-            little easier, and remember that their experiences matter. Every article should
-            leave readers with something helpful, encouraging, or worth thinking about.
+            As a student myself, I understand that school brings exciting opportunities as well
+            as difficult moments. I hope this website can help students manage their school life,
+            get fresh ideas, and find their own style.
           </p>
           <footer>— Matthew Leung, Website Designer</footer>
         </blockquote>
