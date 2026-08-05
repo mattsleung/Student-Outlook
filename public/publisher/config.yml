@@ -59,7 +59,7 @@ collections:
       - label: Category
         name: category
         widget: select
-        options: [Study Tips, Social Tips, Student Stories, Entertainment]
+        options: [Academic Life, Student Lifestyle, Student Stories, Entertainment]
       - label: Short summary
         name: summary
         widget: text

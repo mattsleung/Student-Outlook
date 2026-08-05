@@ -23,8 +23,8 @@ export default function HomePage() {
             <span>Let&apos;s look ahead.</span>
           </h1>
           <p className="hero-description">
-            Student Outlook is a bright corner of the internet for useful advice, honest
-            encouragement, creative fun, and thoughtful student voices.
+            Student Outlook is a bright corner of the internet made by students, for students,
+            with useful advice, honest encouragement, creative fun, and thoughtful student voices.
           </p>
           <div className="hero-actions">
             <Link className="button button-primary" href="/articles">

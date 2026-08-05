@@ -1,6 +1,6 @@
 # Student Outlook
 
-A public student publication featuring study advice, social tips, student stories, and
+A public student publication featuring academic advice, student lifestyle, student stories, and
 entertainment for middle and high school students.
 
 ## Local development
