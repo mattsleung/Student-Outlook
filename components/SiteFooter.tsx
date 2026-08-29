@@ -20,18 +20,17 @@ export function SiteFooter() {
           <div>
             <p className="footer-label">Explore</p>
             <Link href="/articles">Articles</Link>
-            <Link href="/categories">Categories</Link>
           </div>
           <div>
             <p className="footer-label">About</p>
             <Link href="/about">Our mission</Link>
-            <Link href="/write-for-us">Write for Us</Link>
+            <Link href="/privacy">Privacy</Link>
           </div>
         </nav>
       </div>
       <div className="footer-bottom">
-        <p>© 2026 Student Outlook. Built for curious students.</p>
-        <p>Placeholder publication for demonstration.</p>
+        <p>© 2026 Student Outlook contributors.</p>
+        <p>Articles remain the property of their authors.</p>
       </div>
       <div className="footer-theme-control">
         <ThemeToggle />

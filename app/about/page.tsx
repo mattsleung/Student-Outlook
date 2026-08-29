@@ -20,7 +20,7 @@ export default function AboutPage() {
 
       <section className="section-shell designer-message" aria-labelledby="designer-message-title">
         <div>
-          <p className="eyebrow">A message from the designer</p>
+          <p className="eyebrow">A message from the developer</p>
           <h2 id="designer-message-title">Why Student Outlook exists</h2>
         </div>
         <blockquote>
@@ -33,7 +33,7 @@ export default function AboutPage() {
             as difficult moments. I hope this website can help students manage their school life,
             get fresh ideas, and find their own style.
           </p>
-          <footer>— Matthew Leung, Website Designer</footer>
+          <footer>— Matthew Leung, Student Outlook Developer</footer>
         </blockquote>
       </section>
 

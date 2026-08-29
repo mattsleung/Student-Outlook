@@ -27,7 +27,7 @@ collections:
     format: frontmatter
     identifier_field: title
     summary: "{{title}} — {{author}}"
-    sortable_fields: [title, dateIso, category]
+    sortable_fields: [title, dateIso]
     editor:
       preview: false
     fields:
@@ -49,17 +49,13 @@ collections:
         media_library:
           config:
             multiple: false
-        hint: Upload one JPG, PNG, WebP, or AVIF title image no larger than 5 MB. Leave this blank to use automatically selected Student Outlook artwork. Do not upload an identifiable photo of a student without documented permission.
+        hint: Upload one JPG, PNG, WebP, or AVIF title image no larger than 5 MB. Leave this blank to use automatically selected Student Outlook artwork. Only upload an image you created or have permission to use. Do not upload an identifiable photo of a student without documented permission.
       - label: Title image description
         name: titleImageAlt
         widget: string
         required: false
         pattern: ['^.{0,160}$', "Keep the image description under 160 characters."]
         hint: Briefly describe what the image shows. If left blank, the article title is used.
-      - label: Category
-        name: category
-        widget: select
-        options: [Academic Life, Student Lifestyle, Student Stories, Entertainment]
       - label: Short summary
         name: summary
         widget: text

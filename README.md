@@ -39,3 +39,9 @@ A Netlify authentication function limits dashboard access to GitHub usernames ap
 private project settings. See
 [`docs/editorial-workflow.md`](docs/editorial-workflow.md) for the writer, owner, Discord,
 and authentication steps.
+
+## Licensing
+
+The website software is available under the MIT License in [`LICENSE`](LICENSE).
+Published articles and original artwork are not covered by that software license;
+their rights remain with their respective authors and creators.

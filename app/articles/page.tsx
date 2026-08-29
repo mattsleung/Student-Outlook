@@ -14,8 +14,8 @@ export default function ArticlesPage() {
   return (
     <main id="main-content">
       <header className="page-hero page-hero-sky section-shell">
-        <p className="eyebrow">The article shelf</p>
-        <h1>Ideas for school, life, and everything between.</h1>
+        <p className="eyebrow">Student writing</p>
+        <h1>Ideas for school, life, and everything in between.</h1>
         <p>
           Browse practical tips, creative prompts, and reminders written for students.
         </p>
@@ -37,8 +37,8 @@ export default function ArticlesPage() {
           </div>
         ) : (
           <div className="empty-articles">
-            <h3>Our first articles are on the way.</h3>
-            <p>New stories will appear here after they are reviewed and published.</p>
+            <h3>There are no published articles yet.</h3>
+            <p>Our first student-written articles are being prepared for publication.</p>
           </div>
         )}
       </section>

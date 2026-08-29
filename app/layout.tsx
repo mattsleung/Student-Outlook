@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s | Student Outlook",
   },
   description:
-    "A welcoming student publication with useful ideas, encouragement, and creative inspiration.",
+    "A student publication with helpful advice, fresh perspectives, and entertaining reads.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

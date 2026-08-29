@@ -31,7 +31,7 @@ collections:
     identifier_field: title
     slug: "{{slug}}"
     summary: "{{title}} — {{author}}"
-    sortable_fields: [title, dateIso, category]
+    sortable_fields: [title, dateIso]
     editor:
       preview: false
     fields:
@@ -54,21 +54,13 @@ collections:
         media_library:
           config:
             multiple: false
-        hint: Upload one JPG, PNG, WebP, or AVIF title image no larger than 5 MB. Leave this blank to use automatically selected Student Outlook artwork. Do not upload an identifiable photo of a student without documented permission.
+        hint: Upload one JPG, PNG, WebP, or AVIF title image no larger than 5 MB. Leave this blank to use automatically selected Student Outlook artwork. Only upload an image you created or have permission to use. Do not upload an identifiable photo of a student without documented permission.
       - label: Title image description
         name: titleImageAlt
         widget: string
         required: false
         pattern: ['^.{0,160}$', "Keep the image description under 160 characters."]
         hint: If you upload a title image, briefly describe what it shows for readers who cannot see it. If left blank, the article title is used.
-      - label: Category
-        name: category
-        widget: select
-        options:
-          - Academic Life
-          - Student Lifestyle
-          - Student Stories
-          - Entertainment
       - label: Short summary
         name: summary
         widget: text
@@ -108,7 +100,7 @@ collections:
     format: frontmatter
     identifier_field: title
     summary: "{{title}} — {{author}}"
-    sortable_fields: [title, dateIso, category]
+    sortable_fields: [title, dateIso]
     editor:
       preview: false
     fields:
@@ -116,7 +108,6 @@ collections:
       - { label: Author display name, name: author, widget: published-readonly }
       - { label: Title image, name: titleImage, widget: published-readonly, required: false }
       - { label: Title image description, name: titleImageAlt, widget: published-readonly, required: false }
-      - { label: Category, name: category, widget: published-readonly }
       - { label: Short summary, name: summary, widget: published-readonly }
       - { label: Publication date, name: dateIso, widget: published-readonly }
       - { label: Featured article, name: featured, widget: published-readonly, required: false }

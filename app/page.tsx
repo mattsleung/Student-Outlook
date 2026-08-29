@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArticleArtwork } from "@/components/ArticleArtwork";
 import { ArticleCard } from "@/components/ArticleCard";
 import { ArticleTitleImage } from "@/components/ArticleTitleImage";
-import { categoryDetails, getAllArticles } from "@/lib/articles";
+import { getAllArticles } from "@/lib/articles";
 
 export default function HomePage() {
   const articles = getAllArticles();
@@ -35,8 +35,8 @@ export default function HomePage() {
 
         <div className="hero-collage" aria-hidden="true">
           <div className="hero-card hero-card-main">
-            <span className="hero-card-kicker">THE NEXT ISSUE</span>
-            <strong>Ideas for your week.</strong>
+            <span className="hero-card-kicker">STUDENT OUTLOOK</span>
+            <strong>Fresh ideas for your week.</strong>
             <span className="hero-sun" />
           </div>
           <div className="hero-card hero-card-note">
@@ -61,18 +61,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section-shell featured-section" aria-labelledby="featured-title">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Editor&apos;s pick</p>
-            <h2 id="featured-title">Featured this week</h2>
+      {featuredArticle && (
+        <section className="section-shell featured-section" aria-labelledby="featured-title">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Editor&apos;s pick</p>
+              <h2 id="featured-title">Featured article</h2>
+            </div>
+            <Link className="text-link" href="/articles">
+              View all articles <span aria-hidden="true">→</span>
+            </Link>
           </div>
-          <Link className="text-link" href="/articles">
-            View all articles <span aria-hidden="true">→</span>
-          </Link>
-        </div>
-
-        {featuredArticle ? (
           <Link
             className={`featured-article${featuredHasVisual ? "" : " featured-article-no-artwork"}`}
             href={`/articles/${featuredArticle.slug}`}
@@ -83,7 +82,6 @@ export default function HomePage() {
               <ArticleArtwork accent={featuredArticle.accent} symbol={featuredArticle.symbol} />
             ) : null}
             <div className="featured-content">
-              <span className="category-tag">{featuredArticle.category}</span>
               <h3>{featuredArticle.title}</h3>
               <p>{featuredArticle.summary}</p>
               <div className="featured-byline">
@@ -94,45 +92,8 @@ export default function HomePage() {
               </span>
             </div>
           </Link>
-        ) : (
-          <div className="empty-articles">
-            <h3>Our first articles are on the way.</h3>
-            <p>Check back soon for new stories, tips, and creative ideas from Student Outlook.</p>
-          </div>
-        )}
-      </section>
-
-      <section className="section-shell categories-section" aria-labelledby="categories-title">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Find your corner</p>
-            <h2 id="categories-title">Explore by category</h2>
-          </div>
-        </div>
-        <div className="home-category-directory">
-          {categoryDetails.map((category) => {
-            const count = articles.filter((article) => article.category === category.name).length;
-
-            return (
-              <Link
-                className={`directory-row category-${category.accent}`}
-                href={`/categories/${category.slug}`}
-                key={category.slug}
-              >
-                <span className="directory-number">{category.number}</span>
-                <div>
-                  <h3>{category.name}</h3>
-                  <p>{category.description}</p>
-                </div>
-                <span className="directory-count">
-                  {count} {count === 1 ? "article" : "articles"}
-                </span>
-                <span className="directory-arrow" aria-hidden="true">→</span>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="section-shell latest-section" aria-labelledby="latest-title">
         <div className="section-heading">
@@ -152,27 +113,12 @@ export default function HomePage() {
           </div>
         ) : (
           <div className="empty-articles">
-            <h3>Nothing published yet.</h3>
-            <p>The latest Student Outlook articles will appear here after they are approved.</p>
+            <h3>Welcome to Student Outlook.</h3>
+            <p>Our first student-written articles are being prepared for publication.</p>
           </div>
         )}
       </section>
 
-      <section className="section-shell invitation-section" aria-labelledby="invitation-title">
-        <div>
-          <p className="eyebrow">Have something to share?</p>
-          <h2 id="invitation-title">Small ideas are something worth sharing.</h2>
-        </div>
-        <div>
-          <p>
-            Short tips, helpful habits, and jokes may be selected and combined into special
-            community collections.
-          </p>
-          <Link className="button button-dark" href="/write-for-us">
-            See how contributions work <span aria-hidden="true">→</span>
-          </Link>
-        </div>
-      </section>
     </main>
   );
 }
