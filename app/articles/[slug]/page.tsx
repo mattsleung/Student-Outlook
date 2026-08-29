@@ -6,7 +6,7 @@ import { ArticleArtwork } from "@/components/ArticleArtwork";
 import { ArticleCard } from "@/components/ArticleCard";
 import { ArticleTitleImage } from "@/components/ArticleTitleImage";
 import { MarkdownArticle } from "@/components/MarkdownArticle";
-import { getAllArticles, getArticleBySlug, getCategorySlug } from "@/lib/articles";
+import { getAllArticles, getArticleBySlug } from "@/lib/articles";
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -39,7 +39,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   if (!article) notFound();
 
-  const categorySlug = getCategorySlug(article.category);
   const hasArtwork = article.artwork === "default";
   const hasVisual = Boolean(article.titleImage) || hasArtwork;
   const relatedArticles = getAllArticles()
@@ -53,9 +52,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           className={`article-hero section-shell${hasVisual ? "" : " article-hero-no-artwork"}`}
         >
           <div className="article-hero-copy">
-            <Link className="category-tag" href={`/categories/${categorySlug}`}>
-              {article.category}
-            </Link>
             <h1>{article.title}</h1>
             <p className="article-deck">{article.summary}</p>
             <div className="article-byline">

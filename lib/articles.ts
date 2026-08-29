@@ -3,39 +3,6 @@ import { join } from "node:path";
 
 import matter from "gray-matter";
 
-export const categoryDetails = [
-  {
-    name: "Academic Life",
-    slug: "study-tips",
-    description: "Practical ways to plan, focus, and learn with less stress.",
-    number: "01",
-    accent: "sky",
-  },
-  {
-    name: "Student Lifestyle",
-    slug: "social-tips",
-    description: "Thoughtful ways to connect, communicate, and handle everyday relationships.",
-    number: "02",
-    accent: "aqua",
-  },
-  {
-    name: "Student Stories",
-    slug: "student-stories",
-    description: "Experiences, reflections, and creative perspectives from student life.",
-    number: "03",
-    accent: "yellow",
-  },
-  {
-    name: "Entertainment",
-    slug: "entertainment",
-    description: "Reviews of recent movies and games, joke collections, and other fun reads.",
-    number: "04",
-    accent: "coral",
-  },
-] as const;
-
-export type CategoryName = (typeof categoryDetails)[number]["name"];
-export type CategorySlug = (typeof categoryDetails)[number]["slug"];
 export type ArticleAccent = "sky" | "aqua" | "yellow" | "coral" | "lilac" | "mint";
 export type ArticleArtworkChoice = "default" | "none";
 
@@ -45,7 +12,6 @@ export type Article = {
   author: string;
   date: string;
   dateIso: string;
-  category: CategoryName;
   summary: string;
   featured: boolean;
   artwork: ArticleArtworkChoice;
@@ -58,7 +24,6 @@ export type Article = {
 
 const articlesDirectory = join(process.cwd(), "content", "articles");
 const articleAccents: ArticleAccent[] = ["sky", "aqua", "yellow", "coral", "lilac", "mint"];
-const allowedCategories = new Set<string>(categoryDetails.map((category) => category.name));
 const allowedAccents = new Set<string>(articleAccents);
 const authorPattern = /^[\p{L}][\p{L}'’ -]{0,29} \p{L}\.?$/u;
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -157,7 +122,6 @@ function parseArticle(fileName: string): Article {
   const title = requireString(data.title, "title", fileName);
   const authorValue = data.author === undefined || data.author === null ? "" : String(data.author).trim();
   const author = authorValue ? (authorValue.endsWith(".") ? authorValue : `${authorValue}.`) : "Anonymous";
-  const category = requireString(data.category, "category", fileName);
   const summary = requireString(data.summary, "summary", fileName);
   const dateIso = normalizeDate(data.dateIso, fileName);
   const titleImage = normalizeTitleImage(data.titleImage, fileName);
@@ -166,12 +130,6 @@ function parseArticle(fileName: string): Article {
 
   if (titleImageAlt && titleImageAlt.length > 160) {
     throw new Error(`${fileName}: "titleImageAlt" must contain no more than 160 characters.`);
-  }
-
-  if (!allowedCategories.has(category)) {
-    throw new Error(
-      `${fileName}: "category" must be one of ${categoryDetails.map((item) => item.name).join(", ")}.`,
-    );
   }
 
   const requestedArtwork = data.artwork === undefined ? "default" : String(data.artwork);
@@ -197,7 +155,6 @@ function parseArticle(fileName: string): Article {
     author,
     date: legacyDate || formatArticleDate(dateIso),
     dateIso,
-    category: category as CategoryName,
     summary,
     featured: data.featured === true || data.featured === "true",
     artwork: requestedArtwork,
@@ -229,12 +186,4 @@ export function getAllArticles(): Article[] {
 
 export function getArticleBySlug(slug: string) {
   return getAllArticles().find((article) => article.slug === slug);
-}
-
-export function getCategoryBySlug(slug: string) {
-  return categoryDetails.find((category) => category.slug === slug);
-}
-
-export function getCategorySlug(categoryName: CategoryName) {
-  return categoryDetails.find((category) => category.name === categoryName)?.slug;
 }

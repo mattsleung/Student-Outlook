@@ -26,9 +26,6 @@ export function ArticleCard({ article }: { article: Article }) {
           </div>
         )}
         <div className="article-card-content">
-          <div className="article-meta-row">
-            <span className="category-tag">{article.category}</span>
-          </div>
           <h3>{article.title}</h3>
           <p>{article.summary}</p>
           <div className="article-card-footer">

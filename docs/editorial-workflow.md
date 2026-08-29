@@ -63,18 +63,20 @@ Only the repository owner performs the final review and publication.
 1. Open the article from Decap's **In Review** column. Treat this as the
    final-approval queue.
 2. Read the complete article and its Google Doc discussion.
-3. Check the author display name, category, title image, image description,
-   summary, privacy, links, and
+3. Check the author display name, title image, image description, summary, privacy, links, and
    appropriateness.
-4. Confirm that every GitHub check passed.
-5. Ask the writer for changes when necessary. Changes should also be recorded
+4. Confirm that every author has given Student Outlook permission to publish the article.
+   Also confirm that the article is original and that every uploaded image was created by
+   the contributor or is being used with permission.
+5. Confirm that every GitHub check passed.
+6. Ask the writer for changes when necessary. Changes should also be recorded
    in the Google Doc.
-6. When the final review passes, move the entry to **Ready** and approve it by
+7. When the final review passes, move the entry to **Ready** and approve it by
    merging its pull request into `main`.
-7. The protected publishing workflow moves the approved file from
+8. The protected publishing workflow moves the approved file from
    `content/submissions` to `content/articles` and saves that change to `main`.
-8. Wait for the publishing and GitHub Pages workflows to finish.
-9. Open the public article and check its layout on a phone and a computer.
+9. Wait for the publishing and GitHub Pages workflows to finish.
+10. Open the public article and check its layout on a phone and a computer.
 
 Only pull requests authored by `mattsleung` may add, edit, rename, or remove a
 file in `content/articles`. Other writers must work in `content/submissions`.

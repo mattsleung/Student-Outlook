@@ -3,9 +3,7 @@ import Link from "next/link";
 const navigation = [
   { href: "/", label: "Home" },
   { href: "/articles", label: "Articles" },
-  { href: "/categories", label: "Categories" },
   { href: "/about", label: "About" },
-  { href: "/write-for-us", label: "Write for Us" },
 ];
 
 function NavigationLinks() {
