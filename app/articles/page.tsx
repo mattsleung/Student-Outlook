@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ArticleCard } from "@/components/ArticleCard";
+import { ArticleSearch } from "@/components/ArticleSearch";
 import { getAllArticles } from "@/lib/articles";
 
 export const metadata: Metadata = {
@@ -14,31 +14,25 @@ export default function ArticlesPage() {
   return (
     <main id="main-content">
       <header className="page-hero page-hero-sky section-shell">
-        <p className="eyebrow">Student writing</p>
-        <h1>Ideas for school, life, and everything in between.</h1>
+        <p className="eyebrow">All articles</p>
+        <h1>Find something worth reading.</h1>
         <p>
-          Browse practical tips, creative prompts, and reminders written for students.
+          Student-written advice, experiences, reviews, and ideas—all in one place.
         </p>
       </header>
       <section className="section-shell archive-section" aria-labelledby="all-articles-title">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">
-              {articles.length} {articles.length === 1 ? "story" : "stories"}
-            </p>
-            <h2 id="all-articles-title">The latest from Student Outlook</h2>
+            <p className="eyebrow">Browse the publication</p>
+            <h2 id="all-articles-title">Latest articles</h2>
           </div>
         </div>
         {articles.length > 0 ? (
-          <div className="article-grid">
-            {articles.map((article) => (
-              <ArticleCard article={article} key={article.slug} />
-            ))}
-          </div>
+          <ArticleSearch articles={articles} />
         ) : (
           <div className="empty-articles">
-            <h3>There are no published articles yet.</h3>
-            <p>Our first student-written articles are being prepared for publication.</p>
+            <h3>Nothing here yet.</h3>
+            <p>We&apos;re getting the first Student Outlook articles ready.</p>
           </div>
         )}
       </section>

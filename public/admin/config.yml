@@ -91,7 +91,7 @@ collections:
   - name: published_articles
     label: Published
     label_singular: Published article
-    description: Read articles that are already on the public website. Only mattsleung can change or remove them.
+    description: Read articles that are already on the public website. The owner can use the owner publishing tools to change or remove them.
     folder: content/articles
     create: false
     delete: false
