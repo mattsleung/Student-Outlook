@@ -76,7 +76,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <div className="article-layout section-shell">
           <aside className="article-aside">
             <span>STUDENT OUTLOOK</span>
-            <p>A useful idea is worth passing along.</p>
+            <p>Written by students. Made to be useful.</p>
           </aside>
           <MarkdownArticle source={article.body} />
         </div>
@@ -85,7 +85,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <section className="section-shell related-section" aria-labelledby="keep-reading-title">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Keep going</p>
+            <p className="eyebrow">Up next</p>
             <h2 id="keep-reading-title">Read next</h2>
           </div>
           <Link className="text-link" href="/articles">

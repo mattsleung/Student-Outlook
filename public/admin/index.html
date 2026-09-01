@@ -6,6 +6,31 @@
     <meta name="robots" content="noindex, nofollow" />
     <meta name="referrer" content="no-referrer" />
     <title>Student Outlook Writing Dashboard</title>
+    <style>
+      .owner-publisher-link {
+        position: fixed;
+        right: 1rem;
+        bottom: 1rem;
+        z-index: 10000;
+        border: 2px solid #ffffff;
+        border-radius: 0.5rem;
+        background: #112b46;
+        box-shadow: 0 0.25rem 0.75rem rgb(17 43 70 / 25%);
+        color: #ffffff;
+        font: 600 0.875rem/1.2 system-ui, sans-serif;
+        padding: 0.75rem 1rem;
+        text-decoration: none;
+      }
+
+      .owner-publisher-link:hover {
+        background: #244968;
+      }
+
+      .owner-publisher-link:focus-visible {
+        outline: 3px solid #ffd966;
+        outline-offset: 3px;
+      }
+    </style>
     <script>
       if (window.location.hostname === "mattsleung.github.io") {
         const dashboardUrl = new URL(
@@ -17,6 +42,13 @@
     </script>
   </head>
   <body>
+    <a
+      class="owner-publisher-link"
+      href="/publisher/"
+      title="Restricted to the Student Outlook owner"
+    >
+      Owner: manage published articles
+    </a>
     <script>
       window.CMS_MANUAL_INIT = true;
     </script>
